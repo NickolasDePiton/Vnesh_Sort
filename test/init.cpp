@@ -7,7 +7,7 @@ using namespace std;
 
 SCENARIO("io", "[io]")
 {
-  Sort("in.txt", "out.txt", 120);
+  Vnesh_Sort("in.txt", "out.txt", 120);
 	string *a = new string[16], *b = new string[16];
 	bool x = false;
 	ifstream f1("out.txt"), f2("test.txt");
