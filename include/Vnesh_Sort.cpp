@@ -4,66 +4,99 @@
 #include <queue>
 #include <string>
 #include <vector>
+#include <chrono>
 using namespace std;
 
-struct da_ta
+struct line
 {
-	string s;
-	ifstream *f;
-	da_ta(const string& s_, ifstream* f_) : s(s_), f(f_){}
-	bool operator < (const da_ta& da_ta_) const
+	string name;
+	string surname;
+	short year;
+	size_t size() const
 	{
-		return (s > da_ta_.s);
+		return (10 + name.size() + 10 + surname.size() + sizeof(int));
 	}
 };
 
-void Vnesh_Sort(const string input_name, const string output_name, const unsigned long int mem_size)
+bool operator < (const line& s1, const line& s2)
+{
+	return (s1.name < s2.name);
+}
+
+bool operator >(const line& s1, const line& s2)
+{
+	return (s1.name > s2.name);
+}
+
+ostream & operator<<(ostream & output, line const & str)
+{
+	output << str.surname << " " << str.name << " " << str.year;
+	return output;
+}
+
+istream & operator>>(istream & input, line & str)
+{
+	input >> str.surname >> str.name >> str.year;
+	return input;
+}
+
+bool operator != (line s, string str)
+{
+	return (s.surname != str);
+}
+
+struct s_i
+{
+	line s;
+	ifstream *f;
+	s_i(const line& s_, ifstream* f_) : s(s_), f(f_) {}
+};
+
+bool operator < (const s_i& s_i1, const s_i& s_i2)
+{
+	return (s_i1.s > s_i2.s);
+}
+
+void Vnesh_sort(const string input_name, const string output_name, const short mem_size)
 {
 	ifstream fin(input_name);
-	if (!fin.is_open()) 
-		throw("file_not_open");
+	if (!fin.is_open()) throw("file_not_open");
 	ofstream fout(output_name);
-	size_t k = 0;
+	short k = 0;
 	while (!fin.eof())
 	{
-		ofstream fout_(to_string(k + 1) + ".txt");
-		vector<string> v; string s;
-		for (unsigned long int size = 0; (size + sizeof(string)) <= mem_size; size += sizeof(string))
+		vector<line> v; line s;
+		ofstream fout_(to_string(k + 1));
+		for (unsigned long int size = 0; (size + 50) < mem_size * 1024 * 1024 * 0.65;)
 		{
-			getline(fin, s);
-			v.push_back(s);
+			if (!fin.eof() && (fin >> s) && (s != ""))  v.push_back(s);
+			size += s.size();
 		}
 		sort(v.begin(), v.end());
 		for (auto i : v)
 		{
-			if (i != "") fout_ << i;
-			if (i != *(--v.end())) fout_ << endl;
+			if (i != "") fout_ << i << endl;
 		}
 		++k;
 		fout_.close();
 	}
 	fin.close();
-	priority_queue<da_ta> pq;
+	priority_queue<s_i> pq;
 	for (size_t i = 0; i < k; ++i)
 	{
-		ifstream* f_ = new ifstream(to_string(i + 1) + ".txt");
-		string str;
-		getline(*f_, str);
-		da_ta si(str, f_);
+		ifstream* f_ = new ifstream(to_string(i + 1));
+		line str;
+		*f_ >> str;
+		s_i si(str, f_);
 		pq.push(si);
 	}
 	while (!pq.empty())
 	{
-		da_ta si = pq.top();
+		s_i si = pq.top();
 		pq.pop();
-		if (si.s != "")
+		if (si.s != "") fout << si.s << endl;
+		if (!(*si.f).eof() && (*si.f >> si.s))
 		{
-			fout << si.s;
-			fout << endl;
-		}
-		if (!(*si.f).eof())
-		{
-			getline(*si.f, si.s);
 			pq.push(si);
 		}
 		else
@@ -73,7 +106,7 @@ void Vnesh_Sort(const string input_name, const string output_name, const unsigne
 	}
 	for (size_t i = 0; i < k; ++i)
 	{
-		remove((to_string(i + 1) + ".txt").c_str());
+		remove((to_string(i + 1)).c_str());
 	}
 	fout.close();
 }
