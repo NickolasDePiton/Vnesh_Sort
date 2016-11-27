@@ -7,10 +7,10 @@ using namespace std;
 
 SCENARIO("8mb", "[8mb]")
 {
-  Vnesh_Sort("8mb", "out_8", 1);
+  Vnesh_sort("8mb", "out_8", 1);
   bool x = true;
   ifstream f1("out_8"), f2("out8");
-  stroka s1, s2;
+  line s1, s2;
   while(!f2.eof() && !f1.eof())
   {
     if((f1>>s1)&&(f2>>s2))
@@ -30,10 +30,10 @@ SCENARIO("8mb", "[8mb]")
 
 SCENARIO("15mb", "[15mb]")
 {
-  Vnesh_Sort("15mb", "out_15", 4);
+  Vnesh_sort("15mb", "out_15", 4);
   bool x = true;
   ifstream f1("out_15"), f2("out15");
-  stroka s1, s2;
+  line s1, s2;
   while(!f2.eof() && !f1.eof())
   {
     if((f1>>s1)&&(f2>>s2))
@@ -53,10 +53,10 @@ SCENARIO("15mb", "[15mb]")
 
 SCENARIO("32mb", "[32mb]")
 {
-  Vnesh_Sort("32mb", "out_32", 17);
+  Vnesh_sort("32mb", "out_32", 17);
   bool x = true;
   ifstream f1("out_32"), f2("out32");
-  stroka s1, s2;
+  line s1, s2;
   while(!f2.eof() && !f1.eof())
   {
     if((f1>>s1)&&(f2>>s2))
