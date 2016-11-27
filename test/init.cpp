@@ -1,26 +1,75 @@
-#include <Sort.cpp>
+#include <Vnesh_Sort.cpp>
 #include <catch.hpp>
 #include <string>
 #include <iostream>
 #include <fstream>
 using namespace std;
 
-SCENARIO("io", "[io]")
+SCENARIO("8mb", "[8mb]")
 {
-  Vnesh_Sort("in.txt", "out.txt", 120);
-	string *a = new string[16], *b = new string[16];
-	bool x = false;
-	ifstream f1("out.txt"), f2("test.txt");
-	for (int i = 0; i < 16; ++i)
-	{
-		getline(f1, a[i]);
-		getline(f2, b[i]);
-	}
-	size_t x_ = 0;
-	for (int i = 0; i < 16; ++i)
-	{
-		if (a[i] == b[i]) ++x_;
-	}
-	if (x_ == 16) x = true;
+  Vnesh_Sort("8mb", "out_8", 1);
+  bool x = true;
+  ifstream f1("out_8"), f2("out8");
+  stroka s1, s2;
+  while(!f2.eof() && !f1.eof())
+  {
+    if((f1>>s1)&&(f2>>s2))
+    {
+      if(s1.name!=s2.name)
+      {
+        x=false;
+        break;
+      }
+    }
+    else break;
+  }
+  f1.close();
+  f2.close();
   REQUIRE(x);
-} 
+}
+
+SCENARIO("15mb", "[15mb]")
+{
+  Vnesh_Sort("15mb", "out_15", 4);
+  bool x = true;
+  ifstream f1("out_15"), f2("out15");
+  stroka s1, s2;
+  while(!f2.eof() && !f1.eof())
+  {
+    if((f1>>s1)&&(f2>>s2))
+    {
+      if(s1.name!=s2.name)
+      {
+        x=false;
+        break;
+      }
+    }
+    else break;
+  }
+  f1.close();
+  f2.close();
+  REQUIRE(x);
+}
+
+SCENARIO("32mb", "[32mb]")
+{
+  Vnesh_Sort("32mb", "out_32", 17);
+  bool x = true;
+  ifstream f1("out_32"), f2("out32");
+  stroka s1, s2;
+  while(!f2.eof() && !f1.eof())
+  {
+    if((f1>>s1)&&(f2>>s2))
+    {
+      if(s1.name!=s2.name)
+      {
+        x=false;
+        break;
+      }
+    }
+    else break;
+  }
+  f1.close();
+  f2.close();
+  REQUIRE(x);
+}
