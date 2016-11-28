@@ -59,14 +59,14 @@ bool operator < (const s_i& s_i1, const s_i& s_i2)
 
 void Vnesh_sort(const string input_name, const string output_name, const short mem_size)
 {
-	ifstream fin(input_name);
+	ifstream fin(input_name, ios::binary);
 	if (!fin.is_open()) throw("file_not_open");
-	ofstream fout(output_name);
+	ofstream fout(output_name, ios::binary);
 	short k = 0;
 	while (!fin.eof())
 	{
 		vector<line> v; line s;
-		ofstream fout_(to_string(k + 1));
+		ofstream fout_(to_string(k + 1), ios::binary);
 		for (unsigned long int size = 0; (size + 50) < mem_size * 1024 * 1024 * 0.65;)
 		{
 			if (!fin.eof() && (fin >> s) && (s != ""))  v.push_back(s);
@@ -84,7 +84,7 @@ void Vnesh_sort(const string input_name, const string output_name, const short m
 	priority_queue<s_i> pq;
 	for (size_t i = 0; i < k; ++i)
 	{
-		ifstream* f_ = new ifstream(to_string(i + 1));
+		ifstream* f_ = new ifstream(to_string(i + 1), ios::binary);
 		line str;
 		*f_ >> str;
 		s_i si(str, f_);
