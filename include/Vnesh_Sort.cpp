@@ -14,7 +14,7 @@ struct line
 	short year;
 	size_t size() const
 	{
-		return (10 + name.size() + 10 + surname.size() + sizeof(int));
+		return (sizeof(string) + name.size() + sizeof(string) + surname.size() + sizeof(int));
 	}
 };
 
