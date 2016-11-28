@@ -20,12 +20,12 @@ struct line
 
 bool operator < (const line& s1, const line& s2)
 {
-	return (s1.name < s2.name);
+	return (s1.surname < s2.surname);
 }
 
 bool operator >(const line& s1, const line& s2)
 {
-	return (s1.name > s2.name);
+	return (s1.surname > s2.surname);
 }
 
 ostream & operator<<(ostream & output, line const & str)
