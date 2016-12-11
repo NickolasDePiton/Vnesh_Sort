@@ -8,11 +8,12 @@ using namespace std;
 
 SCENARIO("32mb", "[32mb]")
 {
-	auto begin = std::chrono::high_resolution_clock::now();
-	start = std::chrono::system_clock::now();
+	std::chrono::time_point<std::chrono::system_clock> start, end;
+        start = std::chrono::system_clock::now();
 	Vnesh_sort("32mb", "out_32", 17);
-	auto end = std::chrono::high_resolution_clock::now();
-	auto res = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	end = std::chrono::system_clock::now(); 
+	int elapsed_seconds = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+	std::cout << elapsed_seconds << std::endl;
 	cout <<"32MB - " <<(end - start).count() <<" ms"<< endl;
   REQUIRE(1);
 }
