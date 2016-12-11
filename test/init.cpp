@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
+#include <chrono>
 using namespace std;
 
 SCENARIO("32mb", "[32mb]")
