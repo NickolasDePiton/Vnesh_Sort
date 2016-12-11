@@ -7,11 +7,12 @@ using namespace std;
 
 SCENARIO("32mb", "[32mb]")
 {
-	std::chrono::time_point<std::chrono::system_clock> start, end;
+	auto begin = std::chrono::high_resolution_clock::now();
 	start = std::chrono::system_clock::now();
 	Vnesh_sort("32mb", "out_32", 17);
-	end = std::chrono::system_clock::now();
-	cout <<"32MB - " <<(end - start).count() <<" ns"<< endl;
+	auto end = std::chrono::high_resolution_clock::now();
+	auto res = std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	cout <<"32MB - " <<(end - start).count() <<" ms"<< endl;
   REQUIRE(1);
 }
 SCENARIO("15mb", "[15mb]")
